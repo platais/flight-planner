@@ -16,7 +16,7 @@
     <AssemblyName>Flight Planner</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44320</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
@@ -155,11 +155,18 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Attributes\BasicAuthenticationAttribute.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ApiiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Airport.cs" />
+    <Compile Include="Models\Flight.cs" />
+    <Compile Include="Models\FlightStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -215,7 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -264,9 +271,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>52848</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8080/</IISUrl>
-          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>https://localhost:8080/</IISAppRootUrl>
+          <IISUrl>http://localhost:8080</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

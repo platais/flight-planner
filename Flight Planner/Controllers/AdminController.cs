@@ -38,7 +38,7 @@ namespace Flight_Planner.Controllers
         [HttpDelete, Route("admin-api/flights/{id}")]
         public void Delete(int id)
         {
-
+          
         }
     }
 }

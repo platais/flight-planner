@@ -14,18 +14,19 @@ namespace Flight_Planner.Controllers
     {
         // POST: api/Testing
         [HttpPost, Route("testing-api/clear")]
-        public HttpResponseMessage ClearFlight(HttpRequestMessage message)
+        public HttpResponseMessage ClearFlights(HttpRequestMessage message)
         {
 
-            if (FlightStorage.FlightDb != null)
-            {
-                FlightStorage.FlightDb.Clear();
-            }
-            else 
-            {
-                return message.CreateResponse(HttpStatusCode.NotFound);
-            }
-
+            //if (FlightStorage.FlightDb.FirstOrDefault() != null) 
+            //{
+            //    FlightStorage.FlightDb.Clear();
+            //    return message.CreateResponse(HttpStatusCode.OK);
+            //}
+            //else 
+            //{
+            //    return message.CreateResponse(HttpStatusCode.NotFound);
+            //}
+            FlightStorage.FlightDb.Clear();
             return message.CreateResponse(HttpStatusCode.OK);
         }
         // GET: api/Testing

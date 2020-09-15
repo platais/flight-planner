@@ -19,7 +19,7 @@ namespace Flight_Planner.Controllers
         //{
         //    return new string[] {"value1 ", "value2"};
         //}
-        
+
         // GET: api/Admin
         //[HttpGet] //nekas neliecina,ka tas ir get, tapec liekam atributu kvadratiekavaas
         [HttpGet, Route("admin-api/flights/{id}")]
@@ -31,14 +31,14 @@ namespace Flight_Planner.Controllers
             {
                 return message.CreateResponse(HttpStatusCode.NotFound);
             }
-            return message.CreateResponse(HttpStatusCode.OK, flight);           
+            return message.CreateResponse(HttpStatusCode.OK, flight);
         }
 
         // PUT: api/Admin/5
         [HttpPut, Route("admin-api/flights/")]
         public HttpResponseMessage Put(HttpRequestMessage message, Flight flight)
         {
-            
+
 
             if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
             {
@@ -66,16 +66,15 @@ namespace Flight_Planner.Controllers
         [HttpDelete, Route("admin-api/flights/{id}")]
         public HttpResponseMessage DeleteFlight(HttpRequestMessage message, int id)
         {
-            //try
-            //{
-                FlightStorage.FlightDb.RemoveAt(id);
-                return message.CreateResponse(HttpStatusCode.OK);
-            //}
-            //catch 
-            //{
-            //    return message.CreateResponse(HttpStatusCode.NotFound);
-            //}
-        }
 
+            int index = FlightStorage.FlightDb.FindIndex(el => el.Id == id);
+            if (index < 0)
+            {
+                return message.CreateResponse(HttpStatusCode.OK);
+            }
+
+            FlightStorage.FlightDb.RemoveAt(index);
+            return message.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

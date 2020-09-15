@@ -6,17 +6,24 @@ using System.Net.Http;
 using System.Web.Http;
 using Flight_Planner.Attributes;
 using Flight_Planner.Models;
+using System.Threading.Tasks;
 
 namespace Flight_Planner.Controllers
 {
-    //[Route("admin-api")]
+
     [BasicAuthentication]
+    //[Route("admin-api")]
     public class AdminController : ApiController
     {
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] {"value1 ", "value2"};
+        //}
+        
         // GET: api/Admin
         //[HttpGet] //nekas neliecina,ka tas ir get, tapec liekam atributu kvadratiekavaas
         [HttpGet, Route("admin-api/flights/{id}")]
-        public HttpResponseMessage Flights(HttpRequestMessage message, int id)
+        public HttpResponseMessage GetFlight(HttpRequestMessage message, int id)
 
         {
             var flight = FlightStorage.FlightDb.FirstOrDefault(x => x.Id == id);
@@ -28,17 +35,28 @@ namespace Flight_Planner.Controllers
         }
 
         // PUT: api/Admin/5
-        [HttpPut, Route("admin-api/flights/{request}")]
-        public void Put(object request)
+        [HttpPut, Route("admin-api/flights/")]
+        public HttpResponseMessage Put(HttpRequestMessage message, Flight flight)
         {
-
+            //try
+            //{
+                flight.Id = FlightStorage.GetId();
+                FlightStorage.FlightDb.Add(flight);
+                return message.CreateResponse(HttpStatusCode.Created, flight);
+            //}
+            //catch 
+            //{
+            //    return message.CreateResponse(HttpStatusCode.BadRequest);
+            //}
         }
 
         // DELETE: api/Admin/5
         [HttpDelete, Route("admin-api/flights/{id}")]
-        public void Delete(int id)
+        public HttpResponseMessage DeleteFlight(HttpRequestMessage message, int id)
         {
-          
+            FlightStorage.FlightDb.RemoveAt(id);
+            return message.CreateResponse(HttpStatusCode.OK);
         }
+
     }
 }

@@ -27,9 +27,11 @@ namespace Flight_Planner.Models
 
             Airport airport = o as Airport;
 
-            return this.Country == airport.Country &&
-                   this.City == airport.City &&
-                   this.AirportCode == airport.AirportCode;
+            return this.Country.ToUpper().Trim() == airport.Country.ToUpper().Trim() &&
+                   this.City.ToUpper().Trim() == airport.City.ToUpper().Trim() &&
+                   this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
+
+
     }
 }

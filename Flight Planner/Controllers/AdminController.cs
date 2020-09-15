@@ -27,7 +27,7 @@ namespace Flight_Planner.Controllers
 
         {
             var flight = FlightStorage.FlightDb.FirstOrDefault(x => x.Id == id);
-            if (flight == null)
+            if (flight == null || flight.Id == null)
             {
                 return message.CreateResponse(HttpStatusCode.NotFound);
             }
@@ -38,28 +38,43 @@ namespace Flight_Planner.Controllers
         [HttpPut, Route("admin-api/flights/")]
         public HttpResponseMessage Put(HttpRequestMessage message, Flight flight)
         {
-            flight.Id = FlightStorage.GetId();
+            
+
+            if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
+            {
+                return message.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+            //if (Flight.NotValidDate(flight)) 
+            //{
+            //    return message.CreateResponse(HttpStatusCode.BadRequest);
+            //}
 
             if (FlightStorage.FlightDb.Any(f => f.Equals(flight)))
             {
                 return message.CreateResponse(HttpStatusCode.Conflict);
             }
 
+
+            flight.Id = FlightStorage.GetId();
             FlightStorage.FlightDb.Add(flight);
             return message.CreateResponse(HttpStatusCode.Created, flight);
-            //}
-            //catch 
-            //{
-            //    return message.CreateResponse(HttpStatusCode.BadRequest);
-            //}
+
         }
 
         // DELETE: api/Admin/5
         [HttpDelete, Route("admin-api/flights/{id}")]
         public HttpResponseMessage DeleteFlight(HttpRequestMessage message, int id)
         {
-            FlightStorage.FlightDb.RemoveAt(id);
-            return message.CreateResponse(HttpStatusCode.OK);
+            //try
+            //{
+                FlightStorage.FlightDb.RemoveAt(id);
+                return message.CreateResponse(HttpStatusCode.OK);
+            //}
+            //catch 
+            //{
+            //    return message.CreateResponse(HttpStatusCode.NotFound);
+            //}
         }
 
     }

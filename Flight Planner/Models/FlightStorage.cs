@@ -7,7 +7,7 @@ namespace Flight_Planner.Models
 {
     public class FlightStorage
     {
-        private static int _id=1;
+        private static int _id=0;
         //ta ka kontrolieri nodzes updeitojot, jabut te static
         public static List<Flight> FlightDb = new List<Flight>();
 

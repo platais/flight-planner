@@ -38,11 +38,15 @@ namespace Flight_Planner.Controllers
         [HttpPut, Route("admin-api/flights/")]
         public HttpResponseMessage Put(HttpRequestMessage message, Flight flight)
         {
-            //try
-            //{
-                flight.Id = FlightStorage.GetId();
-                FlightStorage.FlightDb.Add(flight);
-                return message.CreateResponse(HttpStatusCode.Created, flight);
+            flight.Id = FlightStorage.GetId();
+
+            if (FlightStorage.FlightDb.Any(f => f.Equals(flight)))
+            {
+                return message.CreateResponse(HttpStatusCode.Conflict);
+            }
+
+            FlightStorage.FlightDb.Add(flight);
+            return message.CreateResponse(HttpStatusCode.Created, flight);
             //}
             //catch 
             //{

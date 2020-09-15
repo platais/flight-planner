@@ -17,7 +17,22 @@ namespace Flight_Planner.Models
 
         public override bool Equals(object obj)
         {
-            return base.Equals(obj);
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is Flight))
+            {
+                return false;
+            }
+
+            Flight flight = obj as Flight;
+
+            return flight.From.Equals(this.From) &&
+                flight.To.Equals(this.To) &&
+                flight.Carrier == this.Carrier &&
+                flight.DepartureTime == this.DepartureTime &&
+                flight.ArrivalTime == this.ArrivalTime;
         }
     }
 

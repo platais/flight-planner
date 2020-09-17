@@ -11,7 +11,6 @@ namespace Flight_Planner.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class BasicAuthenticationAttribute : AuthorizationFilterAttribute
-
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
@@ -31,7 +30,6 @@ namespace Flight_Planner.Attributes
                 {
                     actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
                 }
-
             }
             else
             {

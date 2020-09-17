@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace Flight_Planner.Models
 {
@@ -18,6 +14,5 @@ namespace Flight_Planner.Models
         {
             return _id++;
         }
-
     }
 }

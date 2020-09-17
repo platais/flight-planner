@@ -59,8 +59,15 @@ namespace Flight_Planner.Models
 
         public static bool NotValidDate(Flight flight) 
         {
-            DateTime departureT = DateTime.ParseExact(flight.DepartureTime, "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture);
-            DateTime arrivalT = DateTime.ParseExact(flight.ArrivalTime, "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture);
+            DateTime departureT;
+            DateTime arrivalT;
+
+            DateTime.TryParseExact(flight.DepartureTime, "yyyy-MM-dd hh:mm",
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out departureT);
+            DateTime.TryParseExact(flight.ArrivalTime, "yyyy-MM-dd hh:mm",
+                CultureInfo.InvariantCulture, DateTimeStyles.None, out arrivalT);
+            //DateTime departureT = DateTime.ParseExact(flight.DepartureTime, "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture);
+            //DateTime arrivalT = DateTime.ParseExact(flight.ArrivalTime, "yyyy-MM-dd hh:mm", CultureInfo.InvariantCulture);
             int compareDate = DateTime.Compare(departureT,arrivalT);
             var ret = (compareDate > 0 || (flight.ArrivalTime == flight.DepartureTime)) ? true : false;
             return ret;

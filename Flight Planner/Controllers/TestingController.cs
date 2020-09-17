@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace Flight_Planner.Controllers
 {
-    [Route("testing-api")]
+    //[Route("testing-api")]
     public class TestingController : ApiController
     {
         // POST: api/Testing

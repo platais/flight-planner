@@ -38,24 +38,18 @@ namespace Flight_Planner.Controllers
         [HttpPut, Route("admin-api/flights/")]
         public HttpResponseMessage Put(HttpRequestMessage message, Flight flight)
         {
-
+            //flight = new Flight();
 
             if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
             {
                 return message.CreateResponse(HttpStatusCode.BadRequest);
             }
-
-            //if (Flight.NotValidDate(flight)) 
-            //{
-            //    return message.CreateResponse(HttpStatusCode.BadRequest);
-            //}
-
-            if (FlightStorage.FlightDb.Any(f => f.Equals(flight)))
+            else if (FlightStorage.FlightDb.ToList().Any(f => f.Equals(flight)))
+            //else if (FlightStorage.FlightDb.ToList().Any(f => f.Equals(flight)))
             {
                 return message.CreateResponse(HttpStatusCode.Conflict);
             }
-
-
+            
             flight.Id = FlightStorage.GetId();
             FlightStorage.FlightDb.Add(flight);
             return message.CreateResponse(HttpStatusCode.Created, flight);

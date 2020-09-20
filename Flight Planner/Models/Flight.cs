@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace Flight_Planner.Models
 {
@@ -31,9 +32,11 @@ namespace Flight_Planner.Models
                 flight.DepartureTime == this.DepartureTime &&
                 flight.ArrivalTime == this.ArrivalTime;
         }
+
         public static bool NotValidFlight(Flight flight) 
         {   
-            return flight.To == null || flight.From == null ||      
+            return flight == null ||
+                flight.To == null || flight.From == null ||      
                 String.IsNullOrEmpty(flight.From.City) ||
                 String.IsNullOrEmpty(flight.From.Country) ||
                 String.IsNullOrEmpty(flight.From.AirportCode) ||
@@ -62,6 +65,21 @@ namespace Flight_Planner.Models
             int compareDate = DateTime.Compare(departureT,arrivalT);
             var ret = (compareDate > 0 || (flight.ArrivalTime == flight.DepartureTime)) ? true : false;
             return ret; 
+        }
+
+        public static bool IsFlightRequestEqualsFlight(FlightRequest req) 
+        {
+            if (req == null) 
+            {
+                return false;
+            }
+
+            return FlightStorage.FlightDb.ToList()
+                .Any(f => 
+                f.From.AirportCode.Equals(req.From) &&
+                f.To.AirportCode.Equals(req.To) &&
+                DateTime.Parse(f.DepartureTime)
+                .Equals(DateTime.Parse(req.DepartureDate)));
         }
     }
 }

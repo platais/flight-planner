@@ -31,7 +31,7 @@ namespace Flight_Planner.Models
         {
             string airportStrNormal = airportStr.Trim().ToUpper();
             HashSet<Airport> strHset = new HashSet<Airport>();
-            //pirmdiena
+
             foreach (Flight a in FlightStorage.GetFlightDB())
             {  
                 if (a.From.Country.ToUpper().Contains(airportStrNormal) ||

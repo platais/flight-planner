@@ -50,28 +50,35 @@ namespace Flight_Planner.Models
 
         public static bool IsRequestedFlightPresentInStorage(FlightRequest fReq)
         {
-
-            return FlightStorage.GetFlightDB().ToList()
+            object ListLock = new object();
+            lock (ListLock)
+            {
+                return FlightStorage.GetFlightDB().ToList()
                 .Any(f =>
                     f.From.AirportCode == fReq.From &&
                     f.To.AirportCode == fReq.To &&
                     DateTime.Parse(f.DepartureTime)
                     .ToString("yyyy-MM-dd") ==
                     fReq.DepartureDate);
+            }
         }
 
         public static PageResult<Flight> ReturnPageResults(FlightRequest fReq)
         {
-            PageResult<Flight> ResList = new PageResult<Flight>();
+            object ListLock = new object();
+            lock (ListLock)
+            {
+                PageResult<Flight> ResList = new PageResult<Flight>();
 
-            var resultMatched = FlightStorage.GetFlightMatchingRequest(fReq);
+                var resultMatched = FlightStorage.GetFlightMatchingRequest(fReq);
 
-            ResList.Items = resultMatched;
-            //ir vai nu 2,3 vai 0, vai retos gad iziet
-            ResList.TotalItems = resultMatched.Count;
-            ResList.Page = resultMatched.Any() ? 1 : 0;
-           
-            return ResList;
+                ResList.Items = resultMatched;
+                //ir vai nu 2,3 vai 0, vai retos gad iziet
+                ResList.TotalItems = resultMatched.Count;
+                ResList.Page = resultMatched.Any() ? 1 : 0;
+
+                return ResList;
+            }
         }
     }
 }

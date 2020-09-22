@@ -6,14 +6,18 @@ namespace Flight_Planner.Models
 {
     public class FlightStorage
     {
-        //ta ka kontrolieri nodzes updeitojot, jabut te static
+        //should be static as controller clears on update
         public static SynchronizedCollection<Flight> FlightDb = new SynchronizedCollection<Flight>();
+        private static object _listLock = new object();
         private static int _id = 0;
-
 
         public static int GetId()
         {
-            return _id++;
+            object IdLock = new object();
+            lock (IdLock)
+            {
+                return _id++;
+            }
         }
 
         public static void ClearFlightDb()
@@ -23,18 +27,12 @@ namespace Flight_Planner.Models
 
         public static SynchronizedCollection<Flight> GetFlightDB()
         { 
-            object ListLock = new object();
-            lock (ListLock)
-            {
-                return FlightDb; //= new SynchronizedCollection<Flight>();
-            }
+            return FlightDb;
         }
 
         public static Flight GetFlightFromStorageById(int id)
-        {//Collection was modified; enumeration operation may not execute.'
-            //ar visu lock
-            object ListLock = new object();
-            lock (ListLock)
+        {
+            lock (_listLock)
             {
                 return GetFlightDB().ToList().FirstOrDefault(x => x.Id == id);
             }
@@ -42,40 +40,45 @@ namespace Flight_Planner.Models
 
         public static int GetFlightStorageIndexById(int id) 
         {
-            return GetFlightDB().IndexOf(GetFlightFromStorageById(id));
+            lock (_listLock)
+            {
+                return GetFlightDB().IndexOf(GetFlightFromStorageById(id));
+            }
         }
         public static void AddFlight(Flight flight) 
         {
-            GetFlightDB().Add(flight);
+            lock (_listLock)
+            {
+                GetFlightDB().Add(flight);
+            }
         }
         public static void RemoveFlightByStorageIndex(int idx)
         {
-            GetFlightDB().RemoveAt(idx);
+            lock (_listLock)
+            {
+                GetFlightDB().RemoveAt(idx);
+            }
         }
         public static bool IsFlightAlreadyInStorage(Flight flight)
-        {//Destination array was not long enough. Check destIndex and length, and the array's lower bounds.'
-            object ListLock = new object();
-            lock (ListLock)
+        {
+            lock (_listLock)
             {
                 return GetFlightDB().ToList().Any(f => f.Equals(flight));
             }
         }
 
-        ////šo nevajag, bet testam
-        //public static Flight GetFlightFromStorage(Flight flight)
-        //{
-        //    return GetFlightDB().ToList().FirstOrDefault(f => f.Equals(flight));
-        //}
-
         public static List<Flight> GetFlightMatchingRequest(FlightRequest fReq) 
         {
-            return GetFlightDB().ToList().Where(f =>
+            lock (_listLock)
+            {
+                return GetFlightDB().ToList().Where(f =>
                     f.From.AirportCode == fReq.From &&
                     f.To.AirportCode == fReq.To &&
                     DateTime.Parse(f.DepartureTime)
                     .ToString("yyyy-MM-dd") ==
                     fReq.DepartureDate)
                     .ToList();
+            }
         }
     }
 }

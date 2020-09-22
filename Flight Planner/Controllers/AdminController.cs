@@ -13,56 +13,48 @@ namespace Flight_Planner.Controllers
     {
         //[HttpGet] //nekas neliecina,ka tas ir get, tapec liekam atributu kvadratiekavaas
         [HttpGet, Route("admin-api/flights/{id}")]
-        public async Task<HttpResponseMessage> GetFlight(HttpRequestMessage message, int id)
+        public HttpResponseMessage GetFlight(HttpRequestMessage message, int id)
         {
-            var flight = FlightStorage.FlightDb.FirstOrDefault(x => x.Id == id);
-            if (flight == null)// || flight.Id == null)
+            var flight = FlightStorage.GetFlightFromStorageById(id);
+            if (flight == null)
             {
                 return message.CreateResponse(HttpStatusCode.NotFound);
             }
             return message.CreateResponse(HttpStatusCode.OK, flight);
+
         }
 
-        // PUT: api/Admin/5
         [HttpPut, Route("admin-api/flights/")]
-        public async Task<HttpResponseMessage> PutFlight(HttpRequestMessage message, Flight flight)
+        public HttpResponseMessage PutFlight(HttpRequestMessage message, Flight flight)
         {
+            flight.Id = FlightStorage.GetId();
             if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
             {
                 return message.CreateResponse(HttpStatusCode.BadRequest);
             }
-            else if (FlightStorage.FlightDb.ToList().Any(f => f.Equals(flight)))
+
+            if (FlightStorage.IsFlightAlreadyInStorage(flight))
             {
                 return message.CreateResponse(HttpStatusCode.Conflict);
             }
-            
-            flight.Id = FlightStorage.GetId();
 
-            //object ListLock = new object();
-            //lock(ListLock)
-            //{
-                FlightStorage.FlightDb.Add(flight);
-            //}
-
+            FlightStorage.AddFlight(flight);
             return message.CreateResponse(HttpStatusCode.Created, flight);
         }
 
         [HttpDelete, Route("admin-api/flights/{id}")]
-        public async Task<HttpResponseMessage> DeleteFlight(HttpRequestMessage message, int id)
+        public HttpResponseMessage DeleteFlight(HttpRequestMessage message, int id)
         {
-            //int index = FlightStorage.FlightDb.FindIndex(el => el.Id == id);
-            int index = FlightStorage.FlightDb.IndexOf(FlightStorage.FlightDb.FirstOrDefault(el => el.Id == id));
+            int index = FlightStorage.GetFlightStorageIndexById(id);
+
             if (index < 0)
             {
                 return message.CreateResponse(HttpStatusCode.OK);
             }
-            //object ListLock = new object();
-            //lock (ListLock)
-            //{
-               FlightStorage.FlightDb.RemoveAt(index);
-            //}
-            //FlightStorage.FlightDb.RemoveAt(index);
+
+            FlightStorage.RemoveFlightByStorageIndex(index);
             return message.CreateResponse(HttpStatusCode.OK);
+            
         }
     }
 }

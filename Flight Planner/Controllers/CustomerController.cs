@@ -10,33 +10,37 @@ namespace Flight_Planner.Controllers
     public class CustomerController : ApiController
     {
         [HttpGet, Route("api/airports")]
-        public async Task<HttpResponseMessage> SearchAirport(HttpRequestMessage message, string search)
+        public HttpResponseMessage SearchAirport(HttpRequestMessage message, string search)
         {
             Airport[] airpArr = Airport.SearchAirport(search);
 
-            if (airpArr != null)
+            if (airpArr == null)
             {
-                return message.CreateResponse(HttpStatusCode.OK, airpArr);
+                return message.CreateResponse(HttpStatusCode.NotFound, airpArr);
             }
 
-            return message.CreateResponse(HttpStatusCode.NotFound, airpArr);
+            return message.CreateResponse(HttpStatusCode.OK, airpArr);
         }
 
         [HttpGet, Route("api/flights/{id}")]
-        public async Task<HttpResponseMessage> GetFlightById(HttpRequestMessage message, int id)
+        public HttpResponseMessage GetFlightById(HttpRequestMessage message, int id)
         {
-            var flight = FlightStorage.FlightDb.FirstOrDefault(x => x.Id == id);
+
+            var flight = FlightStorage.GetFlightFromStorageById(id);
+
             if (flight == null)
             {
                 return message.CreateResponse(HttpStatusCode.NotFound);
             }
+
             return message.CreateResponse(HttpStatusCode.OK, flight);
         }
 
         [HttpPost, Route("api/flights/search")]
-        public async Task<HttpResponseMessage> SearchFlights(HttpRequestMessage message, FlightRequest req)
+        public HttpResponseMessage SearchFlights(HttpRequestMessage message, FlightRequest req)
         {
-            if (FlightRequest.NotValidFlightRequest(req))
+            if (FlightRequest.NotValidFlightRequest(req) 
+                && !FlightRequest.IsRequestedFlightPresentInStorage(req))
             {
                 return message.CreateResponse(HttpStatusCode.BadRequest);
             }

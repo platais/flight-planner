@@ -6,10 +6,12 @@ namespace Flight_Planner.Models
 {
     public class Airport
     {
+        public int Id { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         [JsonProperty("airport")]
         public string AirportCode { get; set; }
+
         public override bool Equals(object o)
         {
             if (o == null)

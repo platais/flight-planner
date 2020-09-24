@@ -51,7 +51,8 @@ namespace Flight_Planner.Controllers
             {
                 return message.CreateResponse(HttpStatusCode.OK);
             }
-
+            //prieksh datubazes, bet sie nedzesis ara vienu un to pašu, bet vajadzetu..
+            FlightStorage.RemoveFlightByDbId(id);
             FlightStorage.RemoveFlightByStorageIndex(index);
             return message.CreateResponse(HttpStatusCode.OK);
             

@@ -181,6 +181,10 @@
     <Compile Include="Migrations\202009241709262_Init.designer.cs">
       <DependentUpon>202009241709262_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202009272224426_Concurrent.cs" />
+    <Compile Include="Migrations\202009272224426_Concurrent.designer.cs">
+      <DependentUpon>202009272224426_Concurrent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Airport2.cs" />
     <Compile Include="Models\Airport.cs" />
@@ -279,6 +283,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202009241709262_Init.resx">
       <DependentUpon>202009241709262_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202009272224426_Concurrent.resx">
+      <DependentUpon>202009272224426_Concurrent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

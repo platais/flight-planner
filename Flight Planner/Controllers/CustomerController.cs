@@ -20,7 +20,6 @@ namespace Flight_Planner.Controllers
             }
 
             return message.CreateResponse(HttpStatusCode.OK, airpArr);
-            
         }
 
         [HttpGet, Route("api/flights/{id}")]
@@ -35,7 +34,6 @@ namespace Flight_Planner.Controllers
             }
 
             return message.CreateResponse(HttpStatusCode.OK, new Flight2(flight));
-            //return null;
         }
 
         [HttpPost, Route("api/flights/search")]

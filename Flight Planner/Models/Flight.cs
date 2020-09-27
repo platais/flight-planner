@@ -2,29 +2,24 @@
 using System.Threading;
 using System.Globalization;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace Flight_Planner.Models
 {
     public class Flight
     {
         public int Id {get; set;}
+        [ConcurrencyCheck]
         public Airport From { get; set; }
+        [ConcurrencyCheck]
         public Airport To { get; set; }
+       
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
-        public Flight()
-        {
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
 
-        }
-        public Flight(Airport from, Airport to, string carrier, string departureTime, string arrivalTime)
-        {
-            From = from;
-            To = to;
-            Carrier = carrier;
-            DepartureTime = departureTime;
-            ArrivalTime = arrivalTime;
-        }
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -71,9 +66,6 @@ namespace Flight_Planner.Models
         }
         public static bool NotValidDate(Flight flight)
         {
-            //laika parsesana ir kluda {1/1/0001 12:00:00 AM}
-            //bet divaina karta atgriež it ka pareizu boolu
-
             DateTime departureT =
                 DateTime.ParseExact(flight.DepartureTime, @"yyyy-MM-dd HH:mm", CultureInfo.CurrentCulture);
             DateTime arrivalT =

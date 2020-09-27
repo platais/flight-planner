@@ -45,7 +45,6 @@ namespace Flight_Planner.Models
                 {
                     strHset.Add(new Airport2(a));
                 }
-                
             }
             return strHset.ToArray();
         }

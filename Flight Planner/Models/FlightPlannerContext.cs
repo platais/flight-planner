@@ -16,6 +16,5 @@ namespace Flight_Planner.Models
 
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Airport> Airports { get; set; } 
-
     }
 }

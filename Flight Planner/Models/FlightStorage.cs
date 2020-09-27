@@ -7,10 +7,7 @@ namespace Flight_Planner.Models
 {
     public class FlightStorage
     {
-        //should be static as controller clears on update
-        //private static object _listLock = new object();
         private static int _id = 0;
-
         public static int GetId()
         {
             object IdLock = new object();
@@ -36,7 +33,7 @@ namespace Flight_Planner.Models
             {
                 var flight = context.Flights
                     .Include(f => f.To)
-                    .Include(f => f.From).ToList()//šitais include nav tas pats kas no linq
+                    .Include(f => f.From).ToList()
                     .SingleOrDefault(f => f.Id == id);
                 return flight;
             }
@@ -47,11 +44,6 @@ namespace Flight_Planner.Models
             using (var context = new FlightPlannerContext()) 
             {
                 context.Flights.Add(flight);
-                    
-                //nez vai šo vajag
-                //context.Airports.Add(flight.To);
-                //context.Airports.Add(flight.From);
-
                 context.SaveChanges();
             }
         }
@@ -64,7 +56,7 @@ namespace Flight_Planner.Models
                 if (context.Flights != null) {
                     var flight = context.Flights
                             .Include(f => f.To)
-                            .Include(f => f.From)//šitais include nav tas pats kas no linq
+                            .Include(f => f.From)
                             .SingleOrDefault(f => f.Id == id);
 
                     context.Airports.Remove(flight.To);
@@ -76,7 +68,6 @@ namespace Flight_Planner.Models
                 }
                 return false;
             }
-
         }
 
         public static bool IsFlightAlreadyInStorage(Flight flight)
@@ -87,19 +78,16 @@ namespace Flight_Planner.Models
                 {
                     var fl = context.Flights
                             .Include(f => f.To)
-                            .Include(f => f.From).ToList()//šitais include nav tas pats kas no linq
+                            .Include(f => f.From).ToList()
                             .Any(f => f.Equals(flight));
                     return fl;
                 }
                 return false;
-            }
-            
+            } 
         }
 
         public static List<Flight> GetFlightMatchingRequest(FlightRequest fReq)
         {
-            //lock (_listLock)
-            //{
             using (var context = new FlightPlannerContext())
             {
                 if (context.Flights != null)
@@ -119,6 +107,5 @@ namespace Flight_Planner.Models
                 return null;
             }
         }
-
     }
 }

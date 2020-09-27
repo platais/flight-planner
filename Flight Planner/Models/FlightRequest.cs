@@ -11,26 +11,6 @@ namespace Flight_Planner.Models
         public string To { get; set; }
         public string DepartureDate { get; set; }
 
-        //šo laikam baigi tomer nevajadzes
-        //public override bool Equals(object obj)
-        //{
-        //    if (obj == null)
-        //    {
-        //        return false;
-        //    }
-        //    if (!(obj is FlightRequest))
-        //    {
-        //        return false;
-        //    }
-
-        //    FlightRequest flReq = obj as FlightRequest;
-
-        //    return flReq.From.ToUpper().Trim().Equals(this.From) &&
-        //        flReq.To.ToUpper().Trim().Equals(this.To) &&
-        //        flReq.DepartureDate == this.DepartureDate;
-
-        //}
-
         public static bool NotValidFlightRequest(FlightRequest flight)
         {
             if (flight == null)
@@ -41,11 +21,10 @@ namespace Flight_Planner.Models
             {
                 return true;
             }
-            //and pret or
+           
             return String.IsNullOrEmpty(flight.From) &&
                    String.IsNullOrEmpty(flight.To) &&
                    String.IsNullOrEmpty(flight.DepartureDate);
-
         }
 
         public static bool IsRequestedFlightPresentInStorage(FlightRequest fReq)
@@ -79,7 +58,6 @@ namespace Flight_Planner.Models
                 ResList.Page = resultMatched.Any() ? 1 : 0;
 
                 return ResList;
-
         }
     }
 }

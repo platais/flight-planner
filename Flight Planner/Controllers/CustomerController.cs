@@ -12,7 +12,7 @@ namespace Flight_Planner.Controllers
         [HttpGet, Route("api/airports")]
         public HttpResponseMessage SearchAirport(HttpRequestMessage message, string search)
         {
-            Airport[] airpArr = Airport.SearchAirport(search);
+            Airport2[] airpArr = Airport.SearchAirport(search);
 
             if (airpArr == null)
             {
@@ -20,6 +20,7 @@ namespace Flight_Planner.Controllers
             }
 
             return message.CreateResponse(HttpStatusCode.OK, airpArr);
+            
         }
 
         [HttpGet, Route("api/flights/{id}")]
@@ -33,7 +34,8 @@ namespace Flight_Planner.Controllers
                 return message.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            return message.CreateResponse(HttpStatusCode.OK, flight);
+            return message.CreateResponse(HttpStatusCode.OK, new Flight2(flight));
+            //return null;
         }
 
         [HttpPost, Route("api/flights/search")]

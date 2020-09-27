@@ -182,7 +182,9 @@
       <DependentUpon>202009241709262_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Airport2.cs" />
     <Compile Include="Models\Airport.cs" />
+    <Compile Include="Models\Flight2.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Models\FlightPlannerContext.cs" />
     <Compile Include="Models\FlightRequest.cs" />

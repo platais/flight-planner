@@ -12,24 +12,24 @@ namespace Flight_Planner.Models
         public string DepartureDate { get; set; }
 
         //šo laikam baigi tomer nevajadzes
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-            {
-                return false;
-            }
-            if (!(obj is FlightRequest))
-            {
-                return false;
-            }
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj == null)
+        //    {
+        //        return false;
+        //    }
+        //    if (!(obj is FlightRequest))
+        //    {
+        //        return false;
+        //    }
 
-            FlightRequest flReq = obj as FlightRequest;
+        //    FlightRequest flReq = obj as FlightRequest;
 
-            return flReq.From.ToUpper().Trim().Equals(this.From) &&
-                flReq.To.ToUpper().Trim().Equals(this.To) &&
-                flReq.DepartureDate == this.DepartureDate;
+        //    return flReq.From.ToUpper().Trim().Equals(this.From) &&
+        //        flReq.To.ToUpper().Trim().Equals(this.To) &&
+        //        flReq.DepartureDate == this.DepartureDate;
 
-        }
+        //}
 
         public static bool NotValidFlightRequest(FlightRequest flight)
         {
@@ -45,40 +45,41 @@ namespace Flight_Planner.Models
             return String.IsNullOrEmpty(flight.From) &&
                    String.IsNullOrEmpty(flight.To) &&
                    String.IsNullOrEmpty(flight.DepartureDate);
-       
+
         }
 
         public static bool IsRequestedFlightPresentInStorage(FlightRequest fReq)
         {
-            object ListLock = new object();
-            lock (ListLock)
+            using (var context = new FlightPlannerContext())
             {
-                return FlightStorage.GetFlightDB().ToList()
-                .Any(f =>
-                    f.From.AirportCode == fReq.From &&
-                    f.To.AirportCode == fReq.To &&
-                    DateTime.Parse(f.DepartureTime)
-                    .ToString("yyyy-MM-dd") ==
-                    fReq.DepartureDate);
+                if (context.Flights != null)
+                {
+                    var fl = context.Flights.ToList()
+                    .Any(f =>
+                        f.From.AirportCode == fReq.From &&
+                        f.To.AirportCode == fReq.To &&
+                        DateTime.Parse(f.DepartureTime)
+                        .ToString("yyyy-MM-dd") ==
+                        fReq.DepartureDate);
+                    return fl;
+                }
+                return false;
             }
         }
 
         public static PageResult<Flight> ReturnPageResults(FlightRequest fReq)
         {
-            object ListLock = new object();
-            lock (ListLock)
-            {
                 PageResult<Flight> ResList = new PageResult<Flight>();
 
                 var resultMatched = FlightStorage.GetFlightMatchingRequest(fReq);
 
                 ResList.Items = resultMatched;
-                //ir vai nu 2,3 vai 0, vai retos gad iziet
+                //uz total items met kluudu
                 ResList.TotalItems = resultMatched.Count;
                 ResList.Page = resultMatched.Any() ? 1 : 0;
 
                 return ResList;
-            }
+
         }
     }
 }

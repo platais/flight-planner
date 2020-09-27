@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Data.Entity;
 
 namespace Flight_Planner.Models
 {
@@ -29,26 +30,22 @@ namespace Flight_Planner.Models
                    this.City.ToUpper().Trim() == airport.City.ToUpper().Trim() &&
                    this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
-        public static Airport[] SearchAirport(string airportStr) 
+        public static Airport2[] SearchAirport(string airportStr)
         {
             string airportStrNormal = airportStr.Trim().ToUpper();
-            HashSet<Airport> strHset = new HashSet<Airport>();
+            HashSet<Airport2> strHset = new HashSet<Airport2>();
+            using (var context = new FlightPlannerContext())
+            {
+                var q = context.Airports.ToList()
+                    .Where(f => f.Country.ToUpper().Contains(airportStrNormal) ||
+                    f.City.ToUpper().Contains(airportStrNormal) ||
+                    f.AirportCode.ToUpper().Contains(airportStrNormal));
 
-            foreach (Flight a in FlightStorage.GetFlightDB())
-            {  
-                if (a.From.Country.ToUpper().Contains(airportStrNormal) ||
-                        a.From.City.ToUpper().Contains(airportStrNormal) ||
-                        a.From.AirportCode.ToUpper().Contains(airportStrNormal))
+                foreach (Airport a in q) 
                 {
-                    strHset.Add(a.From);               
+                    strHset.Add(new Airport2(a));
                 }
-
-                if (a.To.Country.ToUpper().Contains(airportStrNormal) ||
-                     a.To.City.ToUpper().Contains(airportStrNormal) ||
-                     a.To.AirportCode.ToUpper().Contains(airportStrNormal))
-                {
-                    strHset.Add(a.To);
-                } 
+                
             }
             return strHset.ToArray();
         }

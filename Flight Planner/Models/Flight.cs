@@ -13,7 +13,18 @@ namespace Flight_Planner.Models
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
+        public Flight()
+        {
 
+        }
+        public Flight(Airport from, Airport to, string carrier, string departureTime, string arrivalTime)
+        {
+            From = from;
+            To = to;
+            Carrier = carrier;
+            DepartureTime = departureTime;
+            ArrivalTime = arrivalTime;
+        }
         public override bool Equals(object obj)
         {
             if (obj == null)
@@ -27,22 +38,22 @@ namespace Flight_Planner.Models
 
             Flight flight = obj as Flight;
 
-            return flight.From.Equals(From) &&
-                flight.To.Equals(To) &&
+            return flight.From.Equals(this.From) &&
+                flight.To.Equals(this.To) &&
                 flight.Carrier.ToUpper().Trim() == Carrier.ToUpper().Trim() &&
-                flight.DepartureTime == DepartureTime &&
-                flight.ArrivalTime == ArrivalTime;
+                flight.DepartureTime == this.DepartureTime &&
+                flight.ArrivalTime == this.ArrivalTime;
         }
 
-        public static bool NotValidFlight(Flight flight) 
+        public static bool NotValidFlight(Flight flight)
         {
             if (flight == null)
             {
                 return true;
             }
 
-            return  
-                flight.To == null || flight.From == null ||      
+            return
+                flight.To == null || flight.From == null ||
                 String.IsNullOrEmpty(flight.From.City) ||
                 String.IsNullOrEmpty(flight.From.Country) ||
                 String.IsNullOrEmpty(flight.From.AirportCode) ||
@@ -55,27 +66,23 @@ namespace Flight_Planner.Models
         }
         public static bool IsSameAirport(Flight flight)
         {
-            return flight.From.AirportCode.ToUpper().Trim() == 
+            return flight.From.AirportCode.ToUpper().Trim() ==
                 flight.To.AirportCode.ToUpper().Trim();
         }
-        public static bool NotValidDate(Flight flight) 
+        public static bool NotValidDate(Flight flight)
         {
-
             //laika parsesana ir kluda {1/1/0001 12:00:00 AM}
             //bet divaina karta atgriež it ka pareizu boolu
 
-            DateTime departureT = 
+            DateTime departureT =
                 DateTime.ParseExact(flight.DepartureTime, @"yyyy-MM-dd HH:mm", CultureInfo.CurrentCulture);
-            DateTime arrivalT = 
+            DateTime arrivalT =
                 DateTime.ParseExact(flight.ArrivalTime, @"yyyy-MM-dd HH:mm", CultureInfo.CurrentUICulture);
 
-
-
             var ret = departureT > arrivalT ||
-                departureT == arrivalT ? true : false;//||
+                departureT == arrivalT ? true : false;
 
-            return ret; 
+            return ret;
         }
-
     }
 }

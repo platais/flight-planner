@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Threading;
 using System.Globalization;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
 namespace Flight_Planner.Models

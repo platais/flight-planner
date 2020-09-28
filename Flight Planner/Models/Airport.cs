@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using System.Data.Entity;
 
 namespace Flight_Planner.Models
 {

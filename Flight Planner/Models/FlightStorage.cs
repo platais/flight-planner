@@ -7,31 +7,27 @@ namespace Flight_Planner.Models
 {
     public class FlightStorage
     {
-        static object IdLock = new object();
+        private static object _lock = new object();
         private static int _id = 0;
         public static int GetId()
         {
-            //object IdLock = new object();
-            //lock (IdLock)
-            //{
                 return _id++;
-            //}
         }
 
         public static void ClearFlightDb()
         {
-                using (var context = new FlightPlannerContext())
-                {
-                    context.Flights.RemoveRange(context.Flights);
-                    context.Airports.RemoveRange(context.Airports);
-                    context.SaveChanges();
-                }
+            using (var context = new FlightPlannerContext())
+            {
+                context.Flights.RemoveRange(context.Flights);
+                context.Airports.RemoveRange(context.Airports);
+                context.SaveChanges();
+            }
         }
 
         public static Flight GetFlightFromStorageById(int id)
         {
-            lock (IdLock)
-            {//
+            lock (_lock)
+            {
                 using (var context = new FlightPlannerContext())
                 {
                     var flight = context.Flights
@@ -40,27 +36,25 @@ namespace Flight_Planner.Models
                         .SingleOrDefault(f => f.Id == id);
                     return flight;
                 }
-            }//
+            }
         }
 
         public static void AddFlight(Flight flight) 
         {
-            lock (IdLock)
+            lock (_lock)
             {
                 using (var context = new FlightPlannerContext())
                 {
-
                     context.Flights.Add(flight);
                     context.SaveChanges();
-                
                 }
             }
         }
 
         public static bool RemoveFlightByDbId(int id)
         {
-            lock (IdLock)
-            {//
+            lock (_lock)
+            {
                 using (var context = new FlightPlannerContext())
                 {
 
@@ -81,13 +75,13 @@ namespace Flight_Planner.Models
                     return false;
                
                 }
-            }//
+            }
         }
 
         public static bool IsFlightAlreadyInStorage(Flight flight)
         {
-            lock (IdLock)
-            {//
+            lock (_lock)
+            {
                 using (var context = new FlightPlannerContext())
                 {
                     if (context.Flights != null)
@@ -100,13 +94,13 @@ namespace Flight_Planner.Models
                     }
                     return false;
                 }
-            }//
+            }
         }
 
         public static List<Flight> GetFlightMatchingRequest(FlightRequest fReq)
         {
-            lock (IdLock)
-            {//
+            lock (_lock)
+            {
                 using (var context = new FlightPlannerContext())
                 {
                     if (context.Flights != null)
@@ -125,7 +119,7 @@ namespace Flight_Planner.Models
                     }
                     return null;
                 }
-            }//
+            }
         }
     }
 }

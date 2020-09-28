@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.Linq;
-using System.Web;
+
 
 namespace Flight_Planner.Models
 {
@@ -53,7 +53,6 @@ namespace Flight_Planner.Models
                 var resultMatched = FlightStorage.GetFlightMatchingRequest(fReq);
 
                 ResList.Items = resultMatched;
-                //uz total items met kluudu
                 ResList.TotalItems = resultMatched.Count;
                 ResList.Page = resultMatched.Any() ? 1 : 0;
 

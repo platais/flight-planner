@@ -1,10 +1,8 @@
-﻿using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Flight_Planner.Attributes;
 using Flight_Planner.Models;
-using System.Threading.Tasks;
 
 namespace Flight_Planner.Controllers
 {
@@ -43,7 +41,7 @@ namespace Flight_Planner.Controllers
         [HttpDelete, Route("admin-api/flights/{id}")]
         public HttpResponseMessage DeleteFlight(HttpRequestMessage message, int id)
         {
-            if (FlightStorage.GetFlightFromStorageById(id)==null)
+            if (FlightStorage.GetFlightFromStorageById(id) == null)
             {
                return message.CreateResponse(HttpStatusCode.OK);
             }

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
-using System.Data.Entity;
+﻿using Newtonsoft.Json;
 
 namespace Flight_Planner.Models
 {

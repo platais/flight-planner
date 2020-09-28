@@ -1,8 +1,6 @@
 ﻿using Flight_Planner.Models;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Flight_Planner.Controllers
@@ -25,7 +23,6 @@ namespace Flight_Planner.Controllers
         [HttpGet, Route("api/flights/{id}")]
         public HttpResponseMessage GetFlightById(HttpRequestMessage message, int id)
         {
-
             var flight = FlightStorage.GetFlightFromStorageById(id);
 
             if (flight == null)

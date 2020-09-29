@@ -29,6 +29,7 @@ namespace Flight_Planner.Models
                    this.City.ToUpper().Trim() == airport.City.ToUpper().Trim() &&
                    this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
+
         public static Airport2[] SearchAirport(string airportStr)
         {
             string airportStrNormal = airportStr.Trim().ToUpper();

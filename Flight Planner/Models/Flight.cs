@@ -53,29 +53,24 @@ namespace Flight_Planner.Models
                 String.IsNullOrEmpty(flight.DepartureTime) ||
                 String.IsNullOrEmpty(flight.ArrivalTime);
         }
+
         public static bool IsSameAirport(Flight flight)
         {
             return flight.From.AirportCode.ToUpper().Trim() == 
                 flight.To.AirportCode.ToUpper().Trim();
         }
+
         public static bool NotValidDate(Flight flight) 
         {
-
-            //laika parsesana ir kluda {1/1/0001 12:00:00 AM}
-            //bet divaina karta atgriež it ka pareizu boolu
-
             DateTime departureT = 
                 DateTime.ParseExact(flight.DepartureTime, @"yyyy-MM-dd HH:mm", CultureInfo.CurrentCulture);
             DateTime arrivalT = 
                 DateTime.ParseExact(flight.ArrivalTime, @"yyyy-MM-dd HH:mm", CultureInfo.CurrentUICulture);
 
-
-
             var ret = departureT > arrivalT ||
-                departureT == arrivalT ? true : false;//||
+                departureT == arrivalT ? true : false;
 
             return ret; 
         }
-
     }
 }

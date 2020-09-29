@@ -10,6 +10,7 @@ namespace Flight_Planner.Models
         public string City { get; set; }
         [JsonProperty("airport")]
         public string AirportCode { get; set; }
+
         public override bool Equals(object o)
         {
             if (o == null)
@@ -27,6 +28,7 @@ namespace Flight_Planner.Models
                    this.City.ToUpper().Trim() == airport.City.ToUpper().Trim() &&
                    this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
+
         public static Airport[] SearchAirport(string airportStr) 
         {
             string airportStrNormal = airportStr.Trim().ToUpper();

@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="DbService.cs" />
     <Compile Include="EntityService.cs" />
+    <Compile Include="FlightService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

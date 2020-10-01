@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FlightPlanner3.DependencyResolution;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,11 +14,14 @@ namespace FlightPlanner3
     {
         protected void Application_Start()
         {
+            var container = IoC.Initialize();
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configuration.DependencyResolver =
+                new StructureMapDependencyResolver(container);
         }
     }
 }

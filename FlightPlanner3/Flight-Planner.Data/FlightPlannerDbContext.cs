@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Flight_Planner.Data
-{
-    class FlightPlannerDbContext: DbContext, IFlightPlannerDbContext
+{//uzliku te public/
+    public class FlightPlannerDbContext: DbContext, IFlightPlannerDbContext
     {
         public FlightPlannerDbContext() : base("flight-planner3")
         {
@@ -24,5 +24,7 @@ namespace Flight_Planner.Data
         }
         public DbSet<Flight> Flights { get; set; }
         public DbSet<Airport> Airports { get; set; }
+
+        public System.Data.Entity.DbSet<Flight_Planner.Core.Models.Entity> Entities { get; set; }
     }
 }

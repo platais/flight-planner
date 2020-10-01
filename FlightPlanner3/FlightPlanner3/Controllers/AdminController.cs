@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Flight_Planner.Attributes;
 
@@ -7,12 +8,16 @@ using Flight_Planner.Attributes;
 namespace FlightPlanner3.Controllers
 {
     [BasicAuthentication]
-    public class AdminController : ApiController
-    {
+    [Route("admin-api")]
+    public class AdminController : BasicApiController
+    { 
         [HttpGet, Route("admin-api/flights/{id}")]
-        public HttpResponseMessage GetFlight(HttpRequestMessage message, int id)
+        public async Task<IHttpActionResult> GetFlight(int id)
         {
-            return null;
+            var flight = await _flightService.GetById(id);
+            if (flight == null)
+                return NotFound();
+            return Ok(flight);
         }
 
         [HttpPut, Route("admin-api/flights/")]

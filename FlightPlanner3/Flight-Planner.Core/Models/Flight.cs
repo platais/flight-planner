@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Flight_Planner.Core.Services;
+using System;
 using System.Globalization;
 
 namespace Flight_Planner.Core.Models
 {
-    public class Flight
+    public class Flight : Entity
     {
         public int Id {get; set;}
 

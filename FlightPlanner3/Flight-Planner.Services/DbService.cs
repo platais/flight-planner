@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,44 +13,70 @@ namespace Flight_Planner.Services
     public class DbService : IDbService
     {
         protected readonly IFlightPlannerDbContext _ctx;
+
+
+        public DbService(IFlightPlannerDbContext context)
+        {
+            _ctx = context;
+        }
         public ServiceResult Create<T>(T entity) where T : Entity
         {
-            throw new NotImplementedException();
+            if (entity == null) 
+            {
+                throw new ArgumentException(nameof(entity));
+            }
+            _ctx.Set<T>().Add(entity);
+            _ctx.SaveChanges();
+            return new ServiceResult(true).Set(entity);//ar set pasaka kura tabula
         }
-
         public ServiceResult Delete<T>(T entity) where T : Entity
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentException(nameof(entity));
+            }
+            _ctx.Set<T>().Remove(entity);
+            _ctx.SaveChanges();
+            return new ServiceResult(true);
         }
 
         public bool Exists<T>(int id) where T : Entity
         {
-            throw new NotImplementedException();
+            return QueryById<T>(id).Any();
         }
 
         public IEnumerable<T> Get<T>() where T : Entity
         {
-            throw new NotImplementedException();
+            return Query<T>().ToList();
         }
 
-        public Task<T> GetById<T>(int id) where T : Entity
+        public async Task<T> GetById<T>(int id) where T : Entity
         {
-            throw new NotImplementedException();
+            return await _ctx.Set<T>()
+                 .SingleOrDefaultAsync(e => e.Id == id);
         }
 
         public IQueryable<T> Query<T>() where T : Entity
         {
-            throw new NotImplementedException();
+            return _ctx.Set<T>().AsQueryable();
         }
 
         public IQueryable<T> QueryById<T>(int id) where T : Entity
         {
-            throw new NotImplementedException();
+            return _ctx.Set<T>().Where(e => e.Id == id);
         }
 
         public ServiceResult Update<T>(T entity) where T : Entity
         {
-            throw new NotImplementedException();
+            if (entity == null)
+            {
+                throw new ArgumentException(nameof(entity));
+            }
+            _ctx.Entry(entity).State = EntityState.Modified;
+            //pie sav tas izm tiks saglabatas
+            _ctx.SaveChanges();
+
+            return new ServiceResult(true).Set(entity);
         }
     }
 }

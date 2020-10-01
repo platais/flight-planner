@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Flight_Planner.Core.Services
 {
-    interface IEntityService<T> where T: Entity
+    public interface IEntityService<T> where T: Entity
     {
         IQueryable<T> Query();
         IQueryable<T> QueryById(int id);

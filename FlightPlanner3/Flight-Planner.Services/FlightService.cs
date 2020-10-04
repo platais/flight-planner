@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,34 @@ namespace Flight_Planner.Services
     {
         public FlightService(IFlightPlannerDbContext context) : base(context) 
         {
-        
+        }
+
+
+        public async Task<ServiceResult> AddFlight(Flight flight)
+        {
+            //kkadu parbaudi vajadzetu?
+            return Create(flight);
+        }
+
+        public Task DeleteFlight()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ServiceResult> DeleteFlightById(int id)
+        {
+            var flight = await GetById(id);
+            return Delete(flight);
+        }
+
+        public Task<bool> FlightExists(Flight flight)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Flight>> GetFlights()
+        {
+            return await Query().ToListAsync();
         }
     }
 }

@@ -14,11 +14,8 @@ namespace FlightPlanner3.Controllers
     {
         protected readonly IFlightService _flightService;
         protected readonly IMapper _mapper;
-        public BasicApiController()
-        {
 
-        }
-        public BasicApiController(IFlightService flightService, IMapper mapper)// :base()
+        public BasicApiController(IFlightService flightService, IMapper mapper)
         {
             _flightService = flightService;
             _mapper = mapper;

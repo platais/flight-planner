@@ -16,33 +16,10 @@ namespace FlightPlanner3.DependencyResolution
         }
 
         private readonly IContainer _container;
-
-        public object GetService(Type serviceType)
-        {
-            if (serviceType == null) 
-            {
-                return null;
-            }
-            if (serviceType.IsAbstract || serviceType.IsInterface) 
-            {
-                return _container.TryGetInstance(serviceType);
-            }
-            return _container.GetInstance(serviceType);
-        }
-
-        public IEnumerable<object> GetServices(Type serviceType)
-        {
-            yield return _container.GetAllInstances(serviceType);
-        }
-
-        public void Dispose()
-        {
-            _container.Dispose();
-        }
         public IDependencyScope BeginScope()
         {
             var childContainer = _container.GetNestedContainer();
-            return new StructureMapDependencyResolver(childContainer);
+            return new StructureMapApiScope(childContainer); //StructureMapDependencyResolver(childContainer); 
         }
     }
 }

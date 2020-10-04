@@ -19,27 +19,27 @@ namespace Flight_Planner.Services
 
         public ServiceResult Create(T entity)
         {
-            throw new NotImplementedException();
+            return Create<T>(entity);
         }
 
         public ServiceResult Delete(T entity)
         {
-            throw new NotImplementedException();
+            return Delete<T>(entity);
         }
 
         public bool Exists(int id)
         {
-            throw new NotImplementedException();
+            return Exists<T>(id);
         }
 
         public IEnumerable<T> Get()
         {
-            throw new NotImplementedException();
+            return Get<T>();
         }
 
         public Task<T> GetById(int id)
         {
-            throw new NotImplementedException();
+            return GetById<T>(id);
         }
 
         public IQueryable<T> Query()
@@ -49,12 +49,12 @@ namespace Flight_Planner.Services
 
         public IQueryable<T> QueryById(int id)
         {
-            throw new NotImplementedException();
+            return QueryById<T>(id);
         }
 
         public ServiceResult Update(T entity)
         {
-            throw new NotImplementedException();
+            return Update<T>(entity);
         }
     }
 }

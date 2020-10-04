@@ -6,7 +6,7 @@ namespace Flight_Planner.Core.Services
 {
     public class ServiceResult
     {
-        public bool Succeeded { get; private set; } //negribam,lai pa celam kads kko maina pa celam, tapec private
+        public bool Succeeded { get; private set; } //negribam,lai pa celam kads kko maina pa celam, tapec private set
         public int Id { get; }
 
         public IEntity Entity { get; private set; }

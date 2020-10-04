@@ -6,7 +6,7 @@ namespace Flight_Planner.Core.Models
 {
     public class Flight : Entity
     {
-        public int Id {get; set;}
+        //public int Id {get; set;}
 
         public Airport From { get; set; }
 

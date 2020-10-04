@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace Flight_Planner.Core.Models
 {
-    public class Airport
+    public class Airport : Entity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Country { get; set; }
         public string City { get; set; }
         [JsonProperty("airport")]

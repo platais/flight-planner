@@ -14,9 +14,8 @@ namespace Flight_Planner.Core.Services
         IEnumerable<T> Get<T>() where T : Entity;
         Task<T> GetById<T>(int id) where T : Entity;
         ServiceResult Create<T>(T entity) where T : Entity;
-        ServiceResult Delete<T>(T entity) where T : Entity;
         ServiceResult Update<T>(T entity) where T : Entity;
+        ServiceResult Delete<T>(T entity) where T : Entity;
         bool Exists<T>(int id) where T : Entity;
-
     }
 }

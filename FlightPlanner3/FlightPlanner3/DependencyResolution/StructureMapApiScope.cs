@@ -33,7 +33,7 @@ namespace FlightPlanner3.DependencyResolution
 
         public IEnumerable<object> GetServices(Type serviceType)
         {
-            yield return _container.GetAllInstances(serviceType);
+            return _container.GetAllInstances(serviceType).Cast<object>();
         }
 
         public void Dispose()

@@ -1,17 +1,24 @@
-﻿using Flight_Planner.Core.Models;
+﻿using AutoMapper;
+using Flight_Planner.Core.Models;
+using Flight_Planner.Core.Services;
+using FlightPlanner3.Controllers;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Flight_Planner.Controllers
 {
-    public class TestingController : ApiController
+    public class TestingController : BasicApiController
     {
-        [HttpPost, Route("testing-api/clear")]
-        public HttpResponseMessage ClearFlights(HttpRequestMessage message)
+        public TestingController(IFlightService flightService, IMapper mapper) : base(flightService, mapper)
         {
-            //FlightStorage.ClearFlightDb();
-            return message.CreateResponse(HttpStatusCode.OK);
+        }
+        [HttpPost, Route("testing-api/clear")]
+        public async Task<IHttpActionResult> ClearFlights(HttpRequestMessage message)
+        {
+            await _flightService.DeleteFlights();
+            return Ok();
         }
     }
 }

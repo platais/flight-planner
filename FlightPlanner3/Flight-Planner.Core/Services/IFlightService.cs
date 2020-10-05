@@ -10,6 +10,6 @@ namespace Flight_Planner.Core.Services
         Task<ServiceResult> AddFlight(Flight flight);
         Task<bool> FlightExists(Flight flight);
         Task<ServiceResult> DeleteFlightById(int id);
-        Task DeleteFlight();
+        Task DeleteFlights();
     }
 }

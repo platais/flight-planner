@@ -9,7 +9,7 @@ namespace FlightPlanner3.DependencyResolution
 {
     public class StructureMapDependencyResolver : StructureMapApiScope, IDependencyResolver
     {
-        public StructureMapDependencyResolver(IContainer container) : base(container)//
+        public StructureMapDependencyResolver(IContainer container) : base(container)
         {
             _container = container ??
                 throw new ArgumentException(nameof(container));

@@ -17,8 +17,8 @@ namespace FlightPlanner3.Controllers
     {
         public AdminController(IFlightService flightService, IMapper mapper) : base(flightService, mapper)
         {
-
         }
+
         [HttpGet, Route("admin-api/flights/{id}")]
         public async Task<IHttpActionResult> GetFlight(int id)
         {
@@ -36,24 +36,36 @@ namespace FlightPlanner3.Controllers
         {//metode var but tikai await, ja task
             //NEKAD Task<void> , ja neko, tad bez void , arī async void nē, reizem izies, reizem neizies
            var flights = await _flightService.GetFlights();
-            return Ok(
-                flights
+            return Ok(flights
                 .Select(f => _mapper.Map<FlightResponse>(f)).ToList());
-
-
         }
 
         [HttpPut, Route("admin-api/flights/")]
-        public async Task<IHttpActionResult> PutFlight(FlightRequest flight)
+        public async Task<IHttpActionResult> PutFlight(Flight flight)
+        //public async Task<IHttpActionResult> PutFlight(FlightRequest flight)
         {
-            var fl = await _flightService.AddFlight(_mapper.Map<Flight>(flight));
-            //kadu vel string
-            return Created("ok", new FlightResponse());
+            if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
+            {
+                return BadRequest();
+            }
+            //if (await _flightService.FlightExists(flight)) //????
+            //{
+             //   return Conflict();
+            //}
+            await _flightService.AddFlight(flight);
+            //string pie header locatrion paraadas
+      
+            return Created("", _mapper.Map(flight, new FlightResponse()));
         }
 
         [HttpDelete, Route("admin-api/flights/{id}")]
         public async Task<HttpResponseMessage> DeleteFlight(HttpRequestMessage message, int id)
         {
+            if (await _flightService.GetById(id) == null)
+            {
+                return message.CreateResponse(HttpStatusCode.OK);
+            }
+
             await _flightService.DeleteFlightById(id);
             return message.CreateResponse(HttpStatusCode.OK);
         }

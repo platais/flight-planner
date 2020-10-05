@@ -17,16 +17,17 @@ namespace Flight_Planner.Services
         {
         }
 
-
         public async Task<ServiceResult> AddFlight(Flight flight)
         {
             //kkadu parbaudi vajadzetu?
             return Create(flight);
         }
 
-        public Task DeleteFlight()
+        public async Task DeleteFlights()
         {
-            throw new NotImplementedException();
+            _ctx.Flights.RemoveRange(_ctx.Flights);
+            _ctx.Airports.RemoveRange(_ctx.Airports);
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task<ServiceResult> DeleteFlightById(int id)
@@ -35,8 +36,9 @@ namespace Flight_Planner.Services
             return Delete(flight);
         }
 
-        public Task<bool> FlightExists(Flight flight)
+        public async Task<bool> FlightExists(Flight flight)
         {
+            //var fl = await Get();
             throw new NotImplementedException();
         }
 

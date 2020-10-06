@@ -8,9 +8,9 @@ namespace Flight_Planner.Core.Models
     {
         //public int Id {get; set;}
 
-        public Airport From { get; set; }
+        public virtual Airport From { get; set; }
 
-        public Airport To { get; set; }
+        public virtual Airport To { get; set; }
        
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }

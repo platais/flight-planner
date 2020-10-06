@@ -42,19 +42,19 @@ namespace FlightPlanner3.Controllers
 
         [HttpPut, Route("admin-api/flights/")]
         public async Task<IHttpActionResult> PutFlight(Flight flight)
-        //public async Task<IHttpActionResult> PutFlight(FlightRequest flight)
+        //public async Task<IHttpActionResult> PutFlight(FlightRequest flight) //vajadzetu jau laikam šo
         {
             if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
             {
                 return BadRequest();
             }
-            //if (await _flightService.FlightExists(flight)) //????
-            //{
-             //   return Conflict();
-            //}
+            if (await _flightService.FlightExists(flight))
+            {
+                return Conflict();
+            }
             await _flightService.AddFlight(flight);
             //string pie header locatrion paraadas
-      
+            //var fl = await _flightService.AddFlight(_mapper.Map<Flight>(flight));
             return Created("", _mapper.Map(flight, new FlightResponse()));
         }
 

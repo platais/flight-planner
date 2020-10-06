@@ -43,6 +43,7 @@ namespace Flight_Planner.Services
         public bool Exists<T>(int id) where T : Entity
         {
             return QueryById<T>(id).Any();
+            
         }
 
         public IEnumerable<T> Get<T>() where T : Entity

@@ -38,8 +38,9 @@ namespace Flight_Planner.Services
 
         public async Task<bool> FlightExists(Flight flight)
         {
-            //var fl = await Get();
-            throw new NotImplementedException();
+            var li = await Query().ToListAsync();
+            var res = li.Contains(flight);
+            return res;
         }
 
         public async Task<IEnumerable<Flight>> GetFlights()

@@ -7,27 +7,34 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Threading.Tasks;
 using FlightPlanner3.Models;
+using Flight_Planner.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Flight_Planner.Controllers
 {
     public class CustomerController : BasicApiController
     {
-        public CustomerController(IFlightService flightService, IMapper mapper) : base(flightService, mapper)
+        private readonly IAirportService _airportService;
+        public CustomerController(IAirportService airportService, IFlightService flightService, IMapper mapper) : base(flightService, mapper)
         {
-
+            _airportService = airportService;
         }
         [HttpGet, Route("api/airports")]
-        public HttpResponseMessage SearchAirport(HttpRequestMessage message, string search)
+        public async Task<IHttpActionResult> SearchAirport(HttpRequestMessage message, string search)
         {
-            //Airport2[] airpArr = Airport.SearchAirport(search);
-
-            //if (airpArr == null)
-            //{
-            //    return message.CreateResponse(HttpStatusCode.NotFound, airpArr);
-            //}
-
-            //return message.CreateResponse(HttpStatusCode.OK, airpArr);
-            return null;
+            var airpEnum = await _airportService.SearchAirports(search);
+            HashSet<AirportResponse> strHset = new HashSet<AirportResponse>();
+            foreach (Airport a in airpEnum)
+            {
+                strHset.Add(_mapper.Map(a, new AirportResponse()));
+            }
+            var airpArr = strHset.ToArray();
+            if (airpArr == null)
+            {
+                return Content(HttpStatusCode.NotFound, airpArr);
+            }
+            return Ok(airpArr);
         }
 
         [HttpGet, Route("api/flights/{id}")]

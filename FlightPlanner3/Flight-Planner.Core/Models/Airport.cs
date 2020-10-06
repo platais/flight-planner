@@ -30,6 +30,5 @@ namespace Flight_Planner.Core.Models
                    this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
 
-        
     }
 }

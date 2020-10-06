@@ -13,5 +13,6 @@ namespace FlightPlanner3.Models
         public string City { get; set; }
         [JsonProperty("airport")]
         public string AirportCode { get; set; }
+
     }
 }

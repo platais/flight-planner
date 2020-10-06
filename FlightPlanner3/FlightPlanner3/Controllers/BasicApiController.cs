@@ -12,11 +12,13 @@ namespace FlightPlanner3.Controllers
 {
     public class BasicApiController : ApiController
     {
+        //protected readonly IAirportService _airportService;
         protected readonly IFlightService _flightService;
         protected readonly IMapper _mapper;
 
-        public BasicApiController(IFlightService flightService, IMapper mapper)
+        public BasicApiController(IFlightService flightService, IMapper mapper)//,IAirportService airportService);
         {
+            //_airportService = airportService;
             _flightService = flightService;
             _mapper = mapper;
         }

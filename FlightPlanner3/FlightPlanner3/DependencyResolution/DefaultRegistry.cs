@@ -41,6 +41,7 @@ namespace FlightPlanner3.DependencyResolution {
             For<IDbService>().Use<DbService>();//te kluda
             For(typeof(IEntityService<>)).Use(typeof(EntityService<>));//te ari kluda
             For<IFlightService>().Use<FlightService>();
+            For<IAirportService>().Use<AirportService>();
             var mapper = AutoMapperConfig.GetMapper();
             For<IMapper>().Use(mapper).Singleton();
         }

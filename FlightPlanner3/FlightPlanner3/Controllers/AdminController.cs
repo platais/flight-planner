@@ -15,7 +15,8 @@ namespace FlightPlanner3.Controllers
     [Route("admin-api")]
     public class AdminController : BasicApiController
     {
-        public AdminController(IFlightService flightService, IMapper mapper) : base(flightService, mapper)
+        public AdminController(IFlightService flightService, 
+            IMapper mapper) : base(flightService, mapper)
         {
         }
 
@@ -32,16 +33,15 @@ namespace FlightPlanner3.Controllers
 
         [HttpGet, Route("admin-api/get/flights")]
         public async Task<IHttpActionResult> GetFlights()
-        {//metode var but tikai await, ja task
-            //NEKAD Task<void> , ja neko, tad bez void , arī async void nē, reizem izies, reizem neizies
+        {
            var flights = await _flightService.GetFlights();
-            return Ok(flights
+
+           return Ok(flights
                 .Select(f => _mapper.Map<FlightResponse>(f)).ToList());
         }
 
         [HttpPut, Route("admin-api/flights/")]
         public async Task<IHttpActionResult> PutFlight(Flight flight)
-        //public async Task<IHttpActionResult> PutFlight(FlightRequest flight) //vajadzetu jau laikam šo
         {
             if (Flight.NotValidFlight(flight) || Flight.IsSameAirport(flight) || Flight.NotValidDate(flight))
             {
@@ -52,8 +52,7 @@ namespace FlightPlanner3.Controllers
                 return Conflict();
             }
             await _flightService.AddFlight(flight);
-            //string pie header locatrion paraadas
-            //var fl = await _flightService.AddFlight(_mapper.Map<Flight>(flight));
+
             return Created("", _mapper.Map(flight, new FlightResponse()));
         }
 

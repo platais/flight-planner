@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Threading.Tasks;
 using FlightPlanner3.Models;
-using Flight_Planner.Services;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,8 +19,9 @@ namespace Flight_Planner.Controllers
         {
             _airportService = airportService;
         }
+
         [HttpGet, Route("api/airports")]
-        public async Task<IHttpActionResult> SearchAirport(HttpRequestMessage message, string search)
+        public async Task<IHttpActionResult> SearchAirport(string search)
         {
             var airpEnum = await _airportService.SearchAirports(search);
             HashSet<AirportResponse> strHset = new HashSet<AirportResponse>();
@@ -38,7 +38,7 @@ namespace Flight_Planner.Controllers
         }
 
         [HttpGet, Route("api/flights/{id}")]
-        public async Task<IHttpActionResult> GetFlightByIdAsync(HttpRequestMessage message, int id)
+        public async Task<IHttpActionResult> GetFlightByIdAsync(int id)
         {
             var flight = await _flightService.GetById(id);
             if (flight == null) 
@@ -53,17 +53,14 @@ namespace Flight_Planner.Controllers
         {
             var fl = await _flightService.GetFlights();
             var pr = FlightSearchRequest.ReturnPageResults(fl, req);
-            //varetu parplanot sis divas metodes...
+            //varetu parplanot sis divas metodes - atrasanas vietu...
             if (FlightSearchRequest.NotValidFlightRequest(req)
                 && !FlightSearchRequest.IsRequestedFlightPresentInStorage(fl,req))
             {
                 return Content(HttpStatusCode.BadRequest, pr);
             }
 
-            //var pr = FlightSearchRequest.ReturnPageResults(fl,req);
             return Ok(pr);
-            
         }
-
     }
 }

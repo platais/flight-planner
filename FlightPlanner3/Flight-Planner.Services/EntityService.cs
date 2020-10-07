@@ -14,7 +14,6 @@ namespace Flight_Planner.Services
     {
         public EntityService(IFlightPlannerDbContext context) : base(context)
         {
-
         }
 
         public ServiceResult Create(T entity)

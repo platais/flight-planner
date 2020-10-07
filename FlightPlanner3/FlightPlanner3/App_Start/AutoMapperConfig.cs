@@ -18,24 +18,18 @@ namespace FlightPlanner3.App_Start
                     .ForMember(d => d.Id,
                     s => s.Ignore());
                 cfg.CreateMap<Airport, AirportRequest>();
-                //
+
                 cfg.CreateMap<FlightRequest, Flight>();
                 cfg.CreateMap<Flight, FlightRequest>();
-                //
+
                 cfg.CreateMap<AirportResponse, AirportRequest>()
                     .ForMember(d => d.Id,
                     opt =>
                     opt.Ignore());
                 cfg.CreateMap<AirportRequest, AirportResponse>();
-                //
+
                 cfg.CreateMap<FlightRequest, FlightResponse>();
 
-                //pieliku
-                //cfg.CreateMap<FlightResponse, FlightRequest>()
-                //    .ForMember(m => m.Id, opt => opt.Ignore())
-                //   .ForMember(m => m.Carrier, opt => opt.Ignore());
-
-                //
                 cfg.CreateMap<Airport, AirportResponse>()
                 .ForMember(m => m.AirportCode,
                 opt =>
@@ -46,7 +40,7 @@ namespace FlightPlanner3.App_Start
                     .ForMember(m => m.AirportCode,
                     opt =>
                     opt.MapFrom(s => s.AirportCode));
-                //
+ 
                 cfg.CreateMap<Flight, FlightResponse>();
             }); 
             config.AssertConfigurationIsValid();

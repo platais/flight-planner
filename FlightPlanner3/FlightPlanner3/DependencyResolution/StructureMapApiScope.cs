@@ -1,9 +1,7 @@
 ﻿using StructureMap;
 using System;
 using System.Collections.Generic;
-
 using System.Linq;
-using System.Web;
 using System.Web.Http.Dependencies;
 
 namespace FlightPlanner3.DependencyResolution
@@ -16,7 +14,7 @@ namespace FlightPlanner3.DependencyResolution
         public StructureMapApiScope(IContainer container)
         {
             _container = container ??
-    throw new ArgumentException(nameof(container));
+                throw new ArgumentException(nameof(container));
         }
         public object GetService(Type serviceType)
         {
@@ -28,6 +26,7 @@ namespace FlightPlanner3.DependencyResolution
             {
                 return _container.TryGetInstance(serviceType);
             }
+
             return _container.GetInstance(serviceType);
         }
 

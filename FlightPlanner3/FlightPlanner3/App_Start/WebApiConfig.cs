@@ -11,7 +11,6 @@ namespace FlightPlanner3
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            //jo nāca iekšā ar lielajiem objekta..
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;
             // Web API routes

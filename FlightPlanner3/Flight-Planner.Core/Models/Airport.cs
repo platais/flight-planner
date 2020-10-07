@@ -1,13 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Flight_Planner.Core.Models
 {
     public class Airport : Entity
     {
-        //public int Id { get; set; }
-        //[ConcurrencyCheck]
         public string Country { get; set; }
         public string City { get; set; }
         [JsonProperty("airport")]

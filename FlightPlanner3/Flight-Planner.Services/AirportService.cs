@@ -34,12 +34,10 @@ namespace Flight_Planner.Services
         public async Task<IEnumerable<Airport>> SearchAirports(string airportStr)
         {
             string airportStrNormal = airportStr.Trim().ToUpper();
-            //HashSet<AirportResponse> strHset = new HashSet<AirportResponse>();
             var li = await Query().ToListAsync();
             var enumAirp = li.Where(f => f.Country.ToUpper().Contains(airportStrNormal) ||
                                     f.City.ToUpper().Contains(airportStrNormal) ||
                                     f.AirportCode.ToUpper().Contains(airportStrNormal));
-            
             return enumAirp;
         }
     }

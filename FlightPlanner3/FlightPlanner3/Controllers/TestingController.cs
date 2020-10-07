@@ -11,9 +11,11 @@ namespace Flight_Planner.Controllers
 {
     public class TestingController : BasicApiController
     {
-        public TestingController(IFlightService flightService, IMapper mapper) : base(flightService, mapper)
+        public TestingController(IFlightService flightService, IMapper mapper) 
+            : base(flightService, mapper)
         {
         }
+
         [HttpPost, Route("testing-api/clear")]
         public async Task<IHttpActionResult> ClearFlights(HttpRequestMessage message)
         {

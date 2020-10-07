@@ -6,8 +6,6 @@ namespace Flight_Planner.Core.Models
 {
     public class Flight : Entity
     {
-        //public int Id {get; set;}
-
         public virtual Airport From { get; set; }
 
         public virtual Airport To { get; set; }
@@ -15,7 +13,6 @@ namespace Flight_Planner.Core.Models
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
-
 
         public override bool Equals(object obj)
         {

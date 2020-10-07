@@ -11,11 +11,9 @@ namespace Flight_Planner.Data
 {
     public interface IFlightPlannerDbContext
     {
-        //nodrošinās, ja ppieliksim jaunu klasi, tad bai default bus implementeta
         DbSet<T> Set<T>() where T : class;
         DbEntityEntry<T> Entry<T>(T entity) where T: class;
         int SaveChanges();
-        //to pašu tikai asinhroni
         Task<int> SaveChangesAsync();
 
         DbSet<Flight> Flights { get; set; }

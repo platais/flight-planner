@@ -14,7 +14,6 @@ namespace Flight_Planner.Services
     {
         protected readonly IFlightPlannerDbContext _ctx;
 
-
         public DbService(IFlightPlannerDbContext context)
         {
             _ctx = context;
@@ -27,7 +26,8 @@ namespace Flight_Planner.Services
             }
             _ctx.Set<T>().Add(entity);
             _ctx.SaveChanges();
-            return new ServiceResult(true).Set(entity);//ar set pasaka kura tabula
+            //.set pasaka kura tabula
+            return new ServiceResult(true).Set(entity);
         }
         public ServiceResult Delete<T>(T entity) where T : Entity
         {
@@ -43,7 +43,6 @@ namespace Flight_Planner.Services
         public bool Exists<T>(int id) where T : Entity
         {
             return QueryById<T>(id).Any();
-            
         }
 
         public IEnumerable<T> Get<T>() where T : Entity
@@ -74,7 +73,6 @@ namespace Flight_Planner.Services
                 throw new ArgumentException(nameof(entity));
             }
             _ctx.Entry(entity).State = EntityState.Modified;
-            //pie sav tas izm tiks saglabatas
             _ctx.SaveChanges();
 
             return new ServiceResult(true).Set(entity);

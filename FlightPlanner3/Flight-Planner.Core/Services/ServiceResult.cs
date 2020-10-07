@@ -6,13 +6,10 @@ namespace Flight_Planner.Core.Services
 {
     public class ServiceResult
     {
-        public bool Succeeded { get; private set; } //negribam,lai pa celam kads kko maina pa celam, tapec private set
+        public bool Succeeded { get; private set; }
         public int Id { get; }
-
         public IEntity Entity { get; private set; }
 
-        //taisam metodi kas atgriež pašu klasi
-        //var viegli mainit objektu jo atgriež sevi atpakaļ
         public ServiceResult(int id, bool succeeded)
         {
             Id = id;
@@ -27,7 +24,5 @@ namespace Flight_Planner.Core.Services
             Entity = entity;
             return this;
         }
-
-
     }
 }

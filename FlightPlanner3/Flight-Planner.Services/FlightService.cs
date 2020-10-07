@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Flight_Planner.Core.Models;
 using Flight_Planner.Core.Services;
@@ -19,13 +17,11 @@ namespace Flight_Planner.Services
 
         public async Task<ServiceResult> AddFlight(Flight flight)
         {
-            //kkadu parbaudi vajadzetu?
             return Create(flight);
         }
 
         public async Task DeleteFlights()
         {
-            //man ir aizdomas ,ka tas ka te daru nav pareizi, lai ari strada
             _ctx.Flights.RemoveRange(_ctx.Flights);
             _ctx.Airports.RemoveRange(_ctx.Airports);
             await _ctx.SaveChangesAsync();

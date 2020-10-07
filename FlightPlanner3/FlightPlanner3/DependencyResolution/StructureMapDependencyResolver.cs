@@ -19,7 +19,7 @@ namespace FlightPlanner3.DependencyResolution
         public IDependencyScope BeginScope()
         {
             var childContainer = _container.GetNestedContainer();
-            return new StructureMapApiScope(childContainer); //StructureMapDependencyResolver(childContainer); 
+            return new StructureMapApiScope(childContainer);
         }
     }
 }

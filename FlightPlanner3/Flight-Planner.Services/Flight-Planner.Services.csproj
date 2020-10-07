@@ -54,8 +54,6 @@
     <Compile Include="DbService.cs" />
     <Compile Include="EntityService.cs" />
     <Compile Include="AirportService.cs" />
-    <Compile Include="AirportValidationService.cs" />
-    <Compile Include="FlightValidationService.cs" />
     <Compile Include="FlightService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

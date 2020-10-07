@@ -35,8 +35,7 @@ namespace FlightPlanner3.DependencyResolution {
                     scan.WithDefaultConventions();
 					scan.With(new ControllerConvention());
                 });
-            //For<IExample>().Use<Example>();
-            //tiksiem vala no usingiem ieks dbcontext, sitais menedzes
+            //menedzee tiksanu vala no usingiem
             For<IFlightPlannerDbContext>().Use<FlightPlannerDbContext>().Transient();
             For<IDbService>().Use<DbService>();
             For(typeof(IEntityService<>)).Use(typeof(EntityService<>));
@@ -46,7 +45,6 @@ namespace FlightPlanner3.DependencyResolution {
             var mapper = AutoMapperConfig.GetMapper();
             For<IMapper>().Use(mapper).Singleton();
         }
-
         #endregion
     }
 }

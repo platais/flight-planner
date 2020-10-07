@@ -7,6 +7,7 @@ namespace Flight_Planner.Core.Models
     public class Airport : Entity
     {
         //public int Id { get; set; }
+        //[ConcurrencyCheck]
         public string Country { get; set; }
         public string City { get; set; }
         [JsonProperty("airport")]

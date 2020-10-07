@@ -12,6 +12,8 @@ namespace FlightPlanner3.Models
         public AirportRequest To { get; set; }
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
+        //public string DepartureDate { get; set; }
         public string ArrivalTime { get; set; }
+
     }
 }

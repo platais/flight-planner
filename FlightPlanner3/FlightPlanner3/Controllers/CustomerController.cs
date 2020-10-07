@@ -49,17 +49,21 @@ namespace Flight_Planner.Controllers
         }
 
         [HttpPost, Route("api/flights/search")]
-        public HttpResponseMessage SearchFlights(HttpRequestMessage message, FlightRequest req)
+        public async Task<IHttpActionResult> SearchFlights(FlightSearchRequest req)
         {
-            //if (FlightRequest.NotValidFlightRequest(req)
-            //    && !FlightRequest.IsRequestedFlightPresentInStorage(req))
-            //{
-            //    return message.CreateResponse(HttpStatusCode.BadRequest);
-            //}
+            var fl = await _flightService.GetFlights();
+            var pr = FlightSearchRequest.ReturnPageResults(fl, req);
+            //varetu parplanot sis divas metodes...
+            if (FlightSearchRequest.NotValidFlightRequest(req)
+                && !FlightSearchRequest.IsRequestedFlightPresentInStorage(fl,req))
+            {
+                return Content(HttpStatusCode.BadRequest, pr);
+            }
 
-            //var pr = FlightRequest.ReturnPageResults(req);
-            //return message.CreateResponse(HttpStatusCode.OK, pr);
-            return null;
+            //var pr = FlightSearchRequest.ReturnPageResults(fl,req);
+            return Ok(pr);
+            
         }
+
     }
 }

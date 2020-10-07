@@ -39,7 +39,7 @@ namespace Flight_Planner.Services
             var enumAirp = li.Where(f => f.Country.ToUpper().Contains(airportStrNormal) ||
                                     f.City.ToUpper().Contains(airportStrNormal) ||
                                     f.AirportCode.ToUpper().Contains(airportStrNormal));
-
+            
             return enumAirp;
         }
     }

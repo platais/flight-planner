@@ -25,6 +25,7 @@ namespace Flight_Planner.Services
 
         public async Task DeleteFlights()
         {
+            //man ir aizdomas ,ka tas ka te daru nav pareizi, lai ari strada
             _ctx.Flights.RemoveRange(_ctx.Flights);
             _ctx.Airports.RemoveRange(_ctx.Airports);
             await _ctx.SaveChangesAsync();

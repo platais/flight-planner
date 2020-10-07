@@ -23,12 +23,11 @@ namespace FlightPlanner3.Controllers
         public async Task<IHttpActionResult> GetFlight(int id)
         {
             var flight = await _flightService.GetById(id);
-            if (flight == null)
+            if (flight == null) 
+            { 
                 return NotFound();
-           
-            return Ok(
-                _mapper.Map(flight, new FlightResponse())
-                );
+            }
+            return Ok(_mapper.Map(flight, new FlightResponse()));
         }
 
         [HttpGet, Route("admin-api/get/flights")]

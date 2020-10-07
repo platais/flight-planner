@@ -200,6 +200,7 @@
     <Compile Include="Models\FlightResponse.cs" />
     <Compile Include="Models\FlightSearchRequest.cs" />
     <Compile Include="Models\FlightSearchResponse.cs" />
+    <Compile Include="Models\PageResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

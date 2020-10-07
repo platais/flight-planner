@@ -38,10 +38,11 @@ namespace FlightPlanner3.DependencyResolution {
             //For<IExample>().Use<Example>();
             //tiksiem vala no usingiem ieks dbcontext, sitais menedzes
             For<IFlightPlannerDbContext>().Use<FlightPlannerDbContext>().Transient();
-            For<IDbService>().Use<DbService>();//te kluda
-            For(typeof(IEntityService<>)).Use(typeof(EntityService<>));//te ari kluda
+            For<IDbService>().Use<DbService>();
+            For(typeof(IEntityService<>)).Use(typeof(EntityService<>));
             For<IFlightService>().Use<FlightService>();
             For<IAirportService>().Use<AirportService>();
+            //For<IFlighValidationService>().Use<FlightValidationService>();
             var mapper = AutoMapperConfig.GetMapper();
             For<IMapper>().Use(mapper).Singleton();
         }

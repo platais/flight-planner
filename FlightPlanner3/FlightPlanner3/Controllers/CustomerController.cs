@@ -3,7 +3,6 @@ using Flight_Planner.Core.Models;
 using Flight_Planner.Core.Services;
 using FlightPlanner3.Controllers;
 using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Threading.Tasks;
 using FlightPlanner3.Models;
@@ -53,7 +52,7 @@ namespace Flight_Planner.Controllers
         {
             var fl = await _flightService.GetFlights();
             var pr = FlightSearchRequest.ReturnPageResults(fl, req);
-            //varetu parplanot sis divas metodes - atrasanas vietu...
+
             if (FlightSearchRequest.NotValidFlightRequest(req)
                 && !FlightSearchRequest.IsRequestedFlightPresentInStorage(fl,req))
             {

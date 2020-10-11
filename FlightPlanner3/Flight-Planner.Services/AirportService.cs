@@ -17,14 +17,17 @@ namespace Flight_Planner.Services
         {
         }
 
-        public Task<bool> AirportExists(Airport airport)
+        public async Task<bool> AirportExists(Airport airport)
         {
-            throw new NotImplementedException();
+            var li = await Query().ToListAsync();
+            var res = li.Contains(airport);
+            return res;
         }
 
-        public Task DeleteAirports()
+        public async Task DeleteAirports()
         {
-            throw new NotImplementedException();
+            _ctx.Airports.RemoveRange(_ctx.Airports);
+            await _ctx.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Airport>> GetAirports()

@@ -1,5 +1,4 @@
-﻿using Flight_Planner.Core.Services;
-using System;
+﻿using System;
 using System.Globalization;
 
 namespace Flight_Planner.Core.Models
@@ -7,20 +6,14 @@ namespace Flight_Planner.Core.Models
     public class Flight : Entity
     {
         public virtual Airport From { get; set; }
-
         public virtual Airport To { get; set; }
-       
         public string Carrier { get; set; }
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-            {
-                return false;
-            }
-            if (!(obj is Flight))
+            if (obj == null || !(obj is Flight))
             {
                 return false;
             }

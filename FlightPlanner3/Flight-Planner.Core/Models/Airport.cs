@@ -11,11 +11,7 @@ namespace Flight_Planner.Core.Models
 
         public override bool Equals(object o)
         {
-            if (o == null)
-            {
-                return false;
-            }
-            if (!(o is Airport))
+            if (o == null || !(o is Airport))
             {
                 return false;
             }
@@ -26,6 +22,5 @@ namespace Flight_Planner.Core.Models
                    this.City.ToUpper().Trim() == airport.City.ToUpper().Trim() &&
                    this.AirportCode.ToUpper().Trim() == airport.AirportCode.ToUpper().Trim();
         }
-
     }
 }

@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using AutoMapper;
 using Flight_Planner.Attributes;
 using Flight_Planner.Core.Models;
@@ -11,7 +12,7 @@ using FlightPlanner3.Models;
 
 namespace FlightPlanner3.Controllers
 {
-    [BasicAuthentication]
+    [BasicAuthentication, EnableCors("*","*","*")]
     [Route("admin-api")]
     public class AdminController : BasicApiController
     {

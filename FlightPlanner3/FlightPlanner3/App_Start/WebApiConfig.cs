@@ -10,6 +10,7 @@ namespace FlightPlanner3
     {
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
             // Web API configuration and services
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Formatters.JsonFormatter.UseDataContractJsonSerializer = false;

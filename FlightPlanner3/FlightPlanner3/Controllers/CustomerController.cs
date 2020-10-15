@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using FlightPlanner3.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Http.Cors;
 
 namespace Flight_Planner.Controllers
 {
+    [EnableCors("*", "*", "*")]
     public class CustomerController : BasicApiController
     {
         private readonly IAirportService _airportService;
@@ -47,7 +49,7 @@ namespace Flight_Planner.Controllers
             return Ok(_mapper.Map(flight, new FlightResponse()));
         }
 
-        [HttpPost, Route("api/flights/search")]
+        [ HttpPost, Route("api/flights/search")]
         public async Task<IHttpActionResult> SearchFlights(FlightSearchRequest req)
         {
             var fl = await _flightService.GetFlights();
